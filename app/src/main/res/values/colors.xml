@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#15b28b</color>
+    <color name="colorPrimaryDark">#00574b</color>
+    <color name="colorAccent">#d81b60</color>
+    <color name="default_button">#0afbbf</color>
+    <color name="error_button">#d60652</color>
+    <color name="main_textGame">#000000</color>
+    <color name="trueButton">#12e219</color>
+    <color name="trueText">#060125</color>
+</resources>

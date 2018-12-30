@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">EngRu</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="create">create</string>
+    <string name="update">save</string>
+    <string name="eng">eng</string>
+    <string name="rus">rus</string>
+</resources>

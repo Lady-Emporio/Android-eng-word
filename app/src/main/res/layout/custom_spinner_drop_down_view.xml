@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:elevation="2dp"
+        android:fontFamily="@font/armata"
+        android:text="CoderzHeaven"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</LinearLayout>
