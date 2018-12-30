@@ -2,6 +2,7 @@ package com.engru.al.engru;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,11 @@ public class ListsListCursor extends CursorAdapter {
         int count = cursor.getInt(cursor.getColumnIndexOrThrow(ScrollEngWordsAdapter.Table.SCROLL_COUNT_AS));
 
         listName.setText(name);
+        if(MainGameActivity.game.chooseScroll.contains(scrollCheck.getText().toString())){
+            listName.setTextColor(Color.BLUE);
+        }else{
+            listName.setTextColor(Color.BLACK);
+        }
         wordsCountIn.setText(Integer.toString(count));
 
         scrollCheck.setOnClickListener(new View.OnClickListener() {

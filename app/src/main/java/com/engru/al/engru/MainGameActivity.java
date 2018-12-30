@@ -12,6 +12,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,27 +31,31 @@ public class MainGameActivity extends Activity {
     public static MainGameActivity game;
     HelperSQL helperSql;
     LinearLayout mainLayout;
+    LinearLayout secondRow;
+    LinearLayout invisibleLayoutHide;
     Button button1;
     Button button2;
     Button button3;
     Button button4;
     TextView engWord;
     TextView statusGame;
+    CheckBox chooseUniqueCheckBox;
     ImageButton setting;
     ImageButton chooseList;
-    DrawerLayout drawer_layout;
+    FrameLayout frameLayout;
     ListView dinamic;
     static int round;
     ArrayList<HashMap<String, String>> wordsList;
     EngWord trueWord;
     Random random;
-    int chooseScroll;
+    ArrayList<String> chooseScroll;
     boolean block;
     float start_x;
     float start_y;
+    boolean isUnique;
     boolean isEng;
     int round_countner_for_status;
-    ArrayList<String>needOpenScroll; // keep intex to string ( because remove(<int>index) and remove(<object>integer)
+    MyArrayIntegerStringListToString needOpenScroll; // keep intex to string ( because remove(<int>index) and remove(<object>integer)
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eng_ru);
@@ -62,42 +68,28 @@ public class MainGameActivity extends Activity {
         setting=(ImageButton) findViewById(R.id.settingsButton);
         chooseList=(ImageButton) findViewById(R.id.chooseList);
         mainLayout=(LinearLayout) findViewById(R.id.mainLayout);
-        drawer_layout=(DrawerLayout) findViewById(R.id.drawer_layout);
+        invisibleLayoutHide=(LinearLayout) findViewById(R.id.invisibleLayoutHide);
+        secondRow=(LinearLayout) findViewById(R.id.secondRow);
+        frameLayout=(FrameLayout) findViewById(R.id.frameLayout);
         dinamic=(ListView) findViewById(R.id._dynamic);
+        chooseUniqueCheckBox=(CheckBox)findViewById(R.id.chooseUniqueCheckBox);
         random = new Random();
-        needOpenScroll=new ArrayList<String>();
+        needOpenScroll=new MyArrayIntegerStringListToString();
         isEng=true;
-        chooseScroll=-1;
+        isUnique=false;
+        chooseScroll=new ArrayList<String>();
         try {
             helperSql=new HelperSQL(this);
             BaseORM.db = helperSql.getWritableDatabase();
+
+            newGame();
+
+            game=this;
             Cursor cursor = BaseORM.db.rawQuery(ScrollEngWordsAdapter.Table.QUERY_COUNT_SCROLL_ENG, null);
             dinamic.setAdapter(new ListsListCursor(this, cursor));
-//            dinamic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                public void onItemClick(AdapterView<?> parent, View view,
-//                                        int position, long id) {
-//                    Log.d("q1","wtf? It work? dinamic.setOnItemClickListener");
-//
-//                    //chooseScroll=(int)id;
-//                   // drawer_layout.closeDrawer(Gravity.LEFT);
-//                    //newGame();
-//                }
-//            });
-            newGame();
-            game=this;
-            dinamic.setOnTouchListener (new View.OnTouchListener(){
-                @Override public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_UP: // нажатие
-                            Log.d("q1",needOpenScroll.toString());
-                            break;
-                    }
-                    return true;
-                }});
 
-            drawer_layout.setOnTouchListener (new View.OnTouchListener(){
+            frameLayout.setOnTouchListener (new View.OnTouchListener(){
                 @Override public boolean onTouch(View v, MotionEvent event) {
-                    drawer_layout.onTouchEvent(event); // иначе открытое окно не закрыть
                     float  x = event.getX();
                     float  y = event.getY();
                     switch (event.getAction()) {
@@ -111,14 +103,13 @@ public class MainGameActivity extends Activity {
                         case MotionEvent.ACTION_CANCEL:
                             float move_x=start_x-x;
                             float move_y=start_y-y;
-                            //Log.d("q1",""+move_x+"||"+move_y);
                             if(move_x> 300 && move_y>-150 && move_y<150  ){
                                 isEng=!isEng;
                                 newGame();
                                 return true;
                             }
-                            if(chooseScroll!=-1 && move_x < -300 && move_y>-150 && move_y<150 ){
-                                RepeatActivity.openRepeatActivity(MainGameActivity.this,chooseScroll);
+                            if(chooseScroll.size()!=0 && move_x < -300 && move_y>-150 && move_y<150 ){
+                                //RepeatActivity.openRepeatActivity(MainGameActivity.this,chooseScroll);
                                 return true;
                             }
                             break;
@@ -127,7 +118,7 @@ public class MainGameActivity extends Activity {
                 }});
 
 
-
+            setShowSecondLayout(false);
         }catch (Exception e){
             ErrorActivity.throwError(MainGameActivity.this,e.toString());
         }
@@ -137,7 +128,14 @@ public class MainGameActivity extends Activity {
         this.reloadAllViewAndData();
     }
     public void showList(View view) {
-            drawer_layout.openDrawer(Gravity.LEFT);
+        switch(secondRow.getVisibility()){
+            case View.VISIBLE:
+                secondRow.setVisibility(View.GONE);
+                return;
+            case View.GONE:
+                secondRow.setVisibility(View.VISIBLE);
+                return;
+        }
     }
     public void showSettings(View view) {
         SettingsActivity.openSettingsActivity(MainGameActivity.this);
@@ -150,11 +148,10 @@ public class MainGameActivity extends Activity {
         Cursor newCursor = BaseORM.db.rawQuery(ScrollEngWordsAdapter.Table.QUERY_COUNT_SCROLL_ENG, null);
         ((ListsListCursor)dinamic.getAdapter()).changeCursor(newCursor);
     }
-
     public void beforeGame(){
         round=-1;
         Cursor cursor;
-        if(chooseScroll==-1) {
+        if(chooseScroll.size()==0) {
             String asId="AlonePassForIdGame";
             cursor = BaseORM.db.rawQuery("SELECT "
                             + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID + " , "
@@ -166,31 +163,49 @@ public class MainGameActivity extends Activity {
                             + ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID
                             + " WHERE " + ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.SCROLL_ID
                             + " = ( SELECT w._id FROM ( " + ScrollEngWordsAdapter.Table.QUERY_COUNT_SCROLL_ENG + " ) AS w "
-                            + " WHERE w." + ScrollEngWordsAdapter.Table.SCROLL_COUNT_AS + " > 4 ORDER BY RANDOM() LIMIT 1 )"
+                            + " WHERE w." + ScrollEngWordsAdapter.Table.SCROLL_COUNT_AS + " >= 4 ORDER BY RANDOM() LIMIT 1 )"
                             + " ; "
                     , null);
              if(cursor.moveToNext()){
-                 chooseScroll=cursor.getInt(cursor.getColumnIndex(asId));
+                 chooseScroll.add(cursor.getString(cursor.getColumnIndex(asId)));
                  cursor.moveToPosition(-1);
              }
         }else{
-             cursor = BaseORM.db.rawQuery("SELECT "
-                            + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID + " , "
-                            + EngWord.Table.TABLE_NAME + "." + EngWord.Table.RU + " , "
-                            + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG + "  "
-                            + " FROM " + ScrollEngWordsAdapter.Table.TABLE_NAME
-                            + " JOIN " + EngWord.Table.TABLE_NAME + " ON "
-                            + ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID
-                            + " WHERE " + ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.SCROLL_ID
-                            + " = ? "
-                            + " ; "
-                    , new String[] {Integer.toString(chooseScroll)});
+            String sql="SELECT "
+                    + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID + " , "
+                    + EngWord.Table.TABLE_NAME + "." + EngWord.Table.RU + " , "
+                    + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG + "  "
+                    + " FROM " + ScrollEngWordsAdapter.Table.TABLE_NAME
+                    + " JOIN " + EngWord.Table.TABLE_NAME + " ON "
+                    + ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID
+                    + " WHERE ";
+            for(int i=0;i!=chooseScroll.size();++i){
+                sql+=ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.SCROLL_ID+" = ? ";
+                if(i!=chooseScroll.size()-1){
+                    sql+=" or ";
+                }
+            }
+            sql+=" ; ";
+            String [] question=new String[chooseScroll.size()];
+            for(int i=0;i!=chooseScroll.size();++i){
+                question[i]=chooseScroll.get(i);
+            }
+             cursor = BaseORM.db.rawQuery(sql
+                    , question);
         }
-
         wordsList=new ArrayList<HashMap<String, String>>(cursor.getCount());
+        ArrayList <String>uniqueList=new ArrayList();
         while (cursor.moveToNext()){
+            String engWord=cursor.getString(cursor.getColumnIndex(EngWord.Table.ENG));
+            if(isUnique) {
+                if (uniqueList.contains(engWord)) {
+                    continue;
+                } else {
+                    uniqueList.add(engWord);
+                }
+            }
             HashMap<String, String> word=new HashMap<String, String>();
-            word.put("eng",cursor.getString(cursor.getColumnIndex(EngWord.Table.ENG)));
+            word.put("eng",engWord);
             word.put("ru",cursor.getString(cursor.getColumnIndex(EngWord.Table.RU)));
             wordsList.add(word);
         }
@@ -277,8 +292,32 @@ public class MainGameActivity extends Activity {
         round_countner_for_status=0;
         block=false;
         beforeGame();
-        if(wordsList.size()<=4){engWord.setText("manual control. Default few size.") ; block = true; return;}
+        if(wordsList.size()<4){
+            engWord.setText("manual control. Default few size.");
+            block = true;
+            button1.setText("need sum");
+            button2.setText("words");
+            button3.setText(">=4");
+            button4.setText("We are");
+            return;
+        }
         nextRound();
     }
-
+    public void MainGameActivity_chooseScrolls(View v){
+        isUnique = chooseUniqueCheckBox.isChecked();
+        chooseScroll=new ArrayList<String>(needOpenScroll.size());
+        for (String i:needOpenScroll){
+            chooseScroll.add(i);
+        }
+        reloadAllViewAndData();
+        setShowSecondLayout(false);
+        newGame();
+    }
+    private void setShowSecondLayout(boolean isShow){
+        if(isShow){
+            secondRow.setVisibility(View.VISIBLE);
+        }else {
+            secondRow.setVisibility(View.GONE);
+        }
+    }
 }
