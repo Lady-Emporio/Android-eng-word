@@ -16,7 +16,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-//public class SettingsActivity extends Activity {
 public class SettingsActivity extends AppCompatActivity {
     public final static String ENG_MODE="Eng words";
     public final static String SCROLL_MODE="Scrolls";

@@ -36,7 +36,6 @@ public class ScrollActivity extends Activity {
         saveButton=(Button)findViewById(R.id.saveButton);
         this.id=getIntent().getIntExtra("ID",-1);
         massAdd=getIntent().getStringExtra(SettingsActivity.MASS_ADD_IN_SCROLL);
-        //Log.d("q1",""+id);
         reloadAllViewAndData();
     }
     @Override protected void onRestart (){

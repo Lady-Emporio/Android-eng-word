@@ -8,4 +8,6 @@
     <color name="main_textGame">#000000</color>
     <color name="trueButton">#12e219</color>
     <color name="trueText">#060125</color>
+    <color name="drapAndDropEnable">#11e747</color>
+    <color name="drapAndDropUnavailable">#037333</color>
 </resources>

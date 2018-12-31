@@ -48,7 +48,7 @@ public class MainGameActivity extends Activity {
     ArrayList<HashMap<String, String>> wordsList;
     EngWord trueWord;
     Random random;
-    ArrayList<String> chooseScroll;
+    MyArrayIntegerStringListToString chooseScroll;
     boolean block;
     float start_x;
     float start_y;
@@ -77,7 +77,7 @@ public class MainGameActivity extends Activity {
         needOpenScroll=new MyArrayIntegerStringListToString();
         isEng=true;
         isUnique=false;
-        chooseScroll=new ArrayList<String>();
+        chooseScroll=new MyArrayIntegerStringListToString();
         try {
             helperSql=new HelperSQL(this);
             BaseORM.db = helperSql.getWritableDatabase();
@@ -109,7 +109,7 @@ public class MainGameActivity extends Activity {
                                 return true;
                             }
                             if(chooseScroll.size()!=0 && move_x < -300 && move_y>-150 && move_y<150 ){
-                                //RepeatActivity.openRepeatActivity(MainGameActivity.this,chooseScroll);
+                                RepeatActivity.openRepeatActivity(MainGameActivity.this,chooseScroll.toString());
                                 return true;
                             }
                             break;
@@ -194,7 +194,7 @@ public class MainGameActivity extends Activity {
                     , question);
         }
         wordsList=new ArrayList<HashMap<String, String>>(cursor.getCount());
-        ArrayList <String>uniqueList=new ArrayList();
+        ArrayList <String>uniqueList=new ArrayList<String>();
         while (cursor.moveToNext()){
             String engWord=cursor.getString(cursor.getColumnIndex(EngWord.Table.ENG));
             if(isUnique) {
@@ -209,6 +209,7 @@ public class MainGameActivity extends Activity {
             word.put("ru",cursor.getString(cursor.getColumnIndex(EngWord.Table.RU)));
             wordsList.add(word);
         }
+        cursor.close();
         Collections.shuffle(wordsList);
     }
     public void resetRound(){
@@ -293,6 +294,7 @@ public class MainGameActivity extends Activity {
         block=false;
         beforeGame();
         if(wordsList.size()<4){
+            statusGame.setText("----");
             engWord.setText("manual control. Default few size.");
             block = true;
             button1.setText("need sum");
@@ -305,10 +307,8 @@ public class MainGameActivity extends Activity {
     }
     public void MainGameActivity_chooseScrolls(View v){
         isUnique = chooseUniqueCheckBox.isChecked();
-        chooseScroll=new ArrayList<String>(needOpenScroll.size());
-        for (String i:needOpenScroll){
-            chooseScroll.add(i);
-        }
+        chooseScroll=new MyArrayIntegerStringListToString();
+        chooseScroll.addAll(needOpenScroll);
         reloadAllViewAndData();
         setShowSecondLayout(false);
         newGame();
@@ -319,5 +319,8 @@ public class MainGameActivity extends Activity {
         }else {
             secondRow.setVisibility(View.GONE);
         }
+    }
+    public void MainGameActivity_GameDrapAndDrop(View v){
+        GameDragAndDropActivity.openGameDragAndDropActivity(MainGameActivity.this,chooseScroll.toString());
     }
 }

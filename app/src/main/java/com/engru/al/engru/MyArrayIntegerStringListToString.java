@@ -23,7 +23,7 @@ public class MyArrayIntegerStringListToString extends ArrayList<String> {
         return array;
     }
     public static ArrayList<String> backwardFromString(String x){
-        if(x.startsWith(startArray) && x.endsWith(endArrays)){
+        if(x!=null && x.startsWith(startArray) && x.endsWith(endArrays)){
             x=x.replace(startArray,"");
             x=x.replace(endArrays,"");
         }else{

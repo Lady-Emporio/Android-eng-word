@@ -39,11 +39,12 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".RepeatActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden"
+        <activity
+            android:name=".RepeatActivity"
             android:screenOrientation="portrait"
-            ></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".GameDragAndDropActivity"></activity>
     </application>
 
 </manifest>

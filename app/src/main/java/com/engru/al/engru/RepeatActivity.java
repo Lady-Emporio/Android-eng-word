@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class RepeatActivity extends Activity {
-    int id;
+    ArrayList<String> ids;
     Cursor cursor;
     int position;
     int maxWord;
@@ -33,23 +33,33 @@ public class RepeatActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repeat);
         Intent intent = getIntent();
-        id = intent.getIntExtra("id",-1);
+        String id_for_split= intent.getStringExtra("id");
+        ids=MyArrayIntegerStringListToString.backwardFromString(id_for_split);
         engRepeat=findViewById(R.id.engRepeat);
         ruRepeat=findViewById(R.id.ruRepeat);
         knowButton=findViewById(R.id.knowButton);
         repeatStatus=findViewById(R.id.repeatStatus);
-        if ( id !=-1){
-            cursor = BaseORM.db.rawQuery("SELECT "
-                            + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID + " , "
-                            + EngWord.Table.TABLE_NAME + "." + EngWord.Table.RU + " , "
-                            + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG + "  "
-                            + " FROM " + ScrollEngWordsAdapter.Table.TABLE_NAME
-                            + " JOIN " + EngWord.Table.TABLE_NAME + " ON "
-                            + ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID
-                            + " WHERE " + ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.SCROLL_ID
-                            + " = ? "
-                            + " ORDER BY "+ EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG +"; "
-                    , new String[] {Integer.toString(id)});
+        if ( ids!=null && ids.size() !=0){
+            String [] id_for_query=new String [ids.size()];
+            for (int i=0;i!=ids.size();++i){
+                id_for_query[i]=ids.get(i);
+            }
+            String sql="SELECT DISTINCT "
+                    + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID + " , "
+                    + EngWord.Table.TABLE_NAME + "." + EngWord.Table.RU + " , "
+                    + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG + "  "
+                    + " FROM " + ScrollEngWordsAdapter.Table.TABLE_NAME
+                    + " JOIN " + EngWord.Table.TABLE_NAME + " ON "
+                    + ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID
+                    + " WHERE ";
+            for (int i=0;i!=ids.size();++i){
+                sql+=" "+ScrollEngWordsAdapter.Table.TABLE_NAME + "." + ScrollEngWordsAdapter.Table.SCROLL_ID + " = ? ";
+                if(i!=ids.size()-1){
+                    sql+= " or ";
+                }
+            }
+            sql+=" ORDER BY "+ EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG +"; ";
+            cursor = BaseORM.db.rawQuery(sql, id_for_query );
             wordsList=new ArrayList<HashMap<String, String>>(cursor.getCount());
             while (cursor.moveToNext()){
                 HashMap<String, String> word=new HashMap<String, String>();
@@ -103,7 +113,7 @@ public class RepeatActivity extends Activity {
             }});
 
     }
-    public static void openRepeatActivity(Context from,int idScroll){
+    public static void openRepeatActivity(Context from,String idScroll){
         Intent intent = new Intent( from,RepeatActivity.class );
         intent.putExtra("id",idScroll);
         from.startActivity(intent);
