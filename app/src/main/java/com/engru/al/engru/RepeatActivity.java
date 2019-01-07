@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class RepeatActivity extends Activity {
+    MainGameActivity.TypeRounds typeRound;
     ArrayList<String> ids;
     Cursor cursor;
     int position;
@@ -39,6 +40,7 @@ public class RepeatActivity extends Activity {
         ruRepeat=findViewById(R.id.ruRepeat);
         knowButton=findViewById(R.id.knowButton);
         repeatStatus=findViewById(R.id.repeatStatus);
+        typeRound=MainGameActivity.TypeRounds.ENG_RU;
         if ( ids!=null && ids.size() !=0){
             String [] id_for_query=new String [ids.size()];
             for (int i=0;i!=ids.size();++i){
@@ -47,6 +49,7 @@ public class RepeatActivity extends Activity {
             String sql="SELECT DISTINCT "
                     + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ID + " , "
                     + EngWord.Table.TABLE_NAME + "." + EngWord.Table.RU + " , "
+                    + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG_VALUE + " , "
                     + EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG + "  "
                     + " FROM " + ScrollEngWordsAdapter.Table.TABLE_NAME
                     + " JOIN " + EngWord.Table.TABLE_NAME + " ON "
@@ -65,6 +68,7 @@ public class RepeatActivity extends Activity {
                 HashMap<String, String> word=new HashMap<String, String>();
                 word.put("eng",cursor.getString(cursor.getColumnIndex(EngWord.Table.ENG)));
                 word.put("ru",cursor.getString(cursor.getColumnIndex(EngWord.Table.RU)));
+                word.put("eng_value",cursor.getString(cursor.getColumnIndex(EngWord.Table.ENG_VALUE)));
                 wordsList.add(word);
             }
             maxWord=wordsList.size();
@@ -92,7 +96,51 @@ public class RepeatActivity extends Activity {
                     case MotionEvent.ACTION_CANCEL:
                         float move_x=start_x-x;
                         float move_y=start_y-y;
-                        if(move_x> 200 && move_y>-150 && move_y<150  ){
+                        if(move_y> 200 && move_x>-100 && move_x<100 ){
+                            switch(typeRound){
+                                case ENG_RU:
+                                    typeRound=MainGameActivity.TypeRounds.RU_ENG;
+                                    engRepeat.setLetterSpacing(0f);
+                                    break;
+                                case RU_ENG:
+                                    typeRound=MainGameActivity.TypeRounds.ENGVALUE_ENG;
+                                    engRepeat.setLetterSpacing(0f);
+                                    break;
+                                case ENGVALUE_ENG:
+                                    typeRound=MainGameActivity.TypeRounds.ENG_ENGVALUE;
+                                    engRepeat.setLetterSpacing(0.3f);
+                                    break;
+                                case ENG_ENGVALUE:
+                                    typeRound=MainGameActivity.TypeRounds.ENG_RU;
+                                    engRepeat.setLetterSpacing(0.3f);
+                                    break;
+                            }
+                            viewNewWord();
+                            return true;
+                        }
+                        else if(move_y<-200 && move_x>-100 && move_x<100 ){
+                            switch(typeRound){
+                                case ENG_RU:
+                                    typeRound=MainGameActivity.TypeRounds.ENG_ENGVALUE;
+                                    engRepeat.setLetterSpacing(0.3f);
+                                    break;
+                                case RU_ENG:
+                                    typeRound=MainGameActivity.TypeRounds.ENG_RU;
+                                    engRepeat.setLetterSpacing(0.3f);
+                                    break;
+                                case ENGVALUE_ENG:
+                                    typeRound=MainGameActivity.TypeRounds.RU_ENG;
+                                    engRepeat.setLetterSpacing(0f);
+                                    break;
+                                case ENG_ENGVALUE:
+                                    typeRound=MainGameActivity.TypeRounds.ENGVALUE_ENG;
+                                    engRepeat.setLetterSpacing(0f);
+                                    break;
+                            }
+                            viewNewWord();
+                            return true;
+                        }
+                        else if(move_x> 150 && move_y>-100 && move_y<100  ){
                             --position;
                             if(position<0){
                                 position=wordsList.size()-1;
@@ -139,8 +187,31 @@ public class RepeatActivity extends Activity {
             return;
         }
         HashMap<String, String> word=wordsList.get(position);
-        engRepeat.setText(word.get("eng"));
-        ruRepeat.setText(word.get("ru"));
+        String eng;
+        String ru;
+        switch(typeRound){
+            case ENG_RU:
+                eng=word.get("eng");
+                ru=word.get("ru");
+                break;
+            case RU_ENG:
+                eng=word.get("ru");
+                ru=word.get("eng");
+                break;
+            case ENGVALUE_ENG:
+                eng=word.get("eng_value");
+                ru=word.get("eng");
+                break;
+            case ENG_ENGVALUE:
+                eng=word.get("eng");
+                ru=word.get("eng_value");
+                break;
+            default:
+                ErrorActivity.throwError(this,"Не обрабатываемый round в Repeat");
+                return;
+        }
+        engRepeat.setText(eng);
+        ruRepeat.setText(ru);
         updateStatus();
     }
     public void updateStatus(){

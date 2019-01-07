@@ -31,7 +31,13 @@
         в eng_value - eng надо уменьшить wordView (eng_value занимает много строк);\n
         в eng - eng_value надо уменьшить buttons (eng_value занимает много строк);\n
     </string>
-    <string name="help3">rus</string>
+    <string name="help3">Если из main game провести по фону слева - направо, то откроется repeat\n
+        просто клик в любую точку (провести слева -направо): следующее слово.\n
+        провести справо - налево: возврат к предыдущему слово. Движение в обратном направлении.\n
+        Если провести снизу-вверх: переключиться режим вперед:\n
+        Если провести сверху-вниз: переключиться режим назад:\n
+        ENG_RU -> RU_ENG -> ENGVALUE_ENG -> ENG_ENGVALUE -> ENG_RU....\n
+    </string>
     <string name="help4">rus</string>
     <string name="help5">rus</string>
 
