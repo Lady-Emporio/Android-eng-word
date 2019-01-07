@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/defaultFormBackground"
             android:text="dir"
+            android:textColor="@android:color/background_dark"
             android:textSize="18sp" />
 
     </LinearLayout>
@@ -57,11 +58,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/defaultFormBackground">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TableLayout
                 android:id="@+id/tableFromFile"

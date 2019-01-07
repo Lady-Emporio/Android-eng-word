@@ -112,6 +112,9 @@ public class ActivityFromFile extends Activity {
                 TableRow.LayoutParams llp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,TableRow.LayoutParams.WRAP_CONTENT);
                 llp.setMargins(0, 0, 5, 5);//2px right-margin
 
+                row.setBackgroundColor(Color.BLACK);//border color
+
+
                 TextView engView=new TextView(this);
                 TextView ruView=new TextView(this);
                 TextView engValueView=new TextView(this);
@@ -121,6 +124,11 @@ public class ActivityFromFile extends Activity {
                 ruView.setLayoutParams(llp);
                 engValueView.setLayoutParams(llp);
                 exampleView.setLayoutParams(llp);
+
+                engView.setTextColor(Color.BLACK);
+                ruView.setTextColor(Color.BLACK);
+                engValueView.setTextColor(Color.BLACK);
+                exampleView.setTextColor(Color.BLACK);
 
                 engView.setBackground(getResources().getDrawable(R.color.defaultFormBackground));
                 ruView.setBackground(getResources().getDrawable(R.color.defaultFormBackground));

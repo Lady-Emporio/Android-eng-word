@@ -38,7 +38,8 @@
         Если провести сверху-вниз: переключиться режим назад:\n
         ENG_RU -> RU_ENG -> ENGVALUE_ENG -> ENG_ENGVALUE -> ENG_RU....\n
     </string>
-    <string name="help4">rus</string>
+    <string name="help4">В download from file можно прокручиваться таблицу.\n
+        Именно таблицу. Если она не влезет в экран - можно покрутить СТРОКУ таблицы. Прокрутка от фона не работает.</string>
     <string name="help5">rus</string>
 
 </resources>

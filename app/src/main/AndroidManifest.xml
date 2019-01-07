@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.engru.al.engru">
 
-    <application android:name=".MyApplication"
-        android:icon="@drawable/ic_launcher_unicorn" android:label="@string/app_name">
+    <application
+        android:name=".MyApplication"
+        android:icon="@drawable/ic_launcher_unicorn"
+        android:label="@string/app_name">
         <activity
             android:name=".MainGameActivity"
             android:screenOrientation="portrait"
@@ -55,9 +57,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivitySqlBrowser" />
-        <activity android:name=".ActivityFromFile" />
-        <activity android:name=".ActivityHelp"></activity>
+        <activity android:name=".ActivitySqlBrowser"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ActivityFromFile"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ActivityHelp"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ActivityIrregularVerbs"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

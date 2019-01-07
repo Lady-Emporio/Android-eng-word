@@ -18,6 +18,7 @@ public class ActivityMenu extends Activity {
                 MainGameActivity.openMainGameActivity(ActivityMenu.this);
                 break;
             case R.id.verbs:
+                ActivityIrregularVerbs.openActivityIrregularVerbs(ActivityMenu.this);
                 break;
             case R.id.openBrowser:
                 ActivitySqlBrowser.openSqlBrowserActivity(ActivityMenu.this);

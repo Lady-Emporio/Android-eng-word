@@ -10,7 +10,7 @@ import android.util.Log;
 import java.io.File;
 
 public class HelperSQL extends SQLiteOpenHelper {
-    private static int version=1;
+    private static int version=2;
     private static String My_DB_NAME="My_db";
     public HelperSQL(Context context) {
         super(context, My_DB_NAME, null, version);
@@ -33,6 +33,7 @@ public class HelperSQL extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ EngWord.Table.TABLE_NAME + ";");
         db.execSQL("DROP TABLE IF EXISTS "+ Scroll.Table.TABLE_NAME + " ;");
         db.execSQL("DROP TABLE IF EXISTS "+ ScrollEngWordsAdapter.Table.TABLE_NAME+" ;");
+        db.execSQL("DROP TABLE IF EXISTS "+ IrregularVerbs.Table.TABLE_NAME+" ;");
     }
     private void insertDefaultValues(SQLiteDatabase db){
         String [][] engWords={
@@ -77,6 +78,7 @@ public class HelperSQL extends SQLiteOpenHelper {
         db.execSQL(EngWord.Table.CREATE_TABLES);
         db.execSQL(Scroll.Table.CREATE_TABLES);
         db.execSQL(ScrollEngWordsAdapter.Table.CREATE_TABLES);
+        db.execSQL(IrregularVerbs.Table.CREATE_TABLES);
     }
     @Override public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
