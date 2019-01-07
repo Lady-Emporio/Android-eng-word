@@ -1,8 +1,38 @@
 <resources>
-    <string name="app_name">EngRu</string>
+    <string name="app_name">Dream</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="create">create</string>
     <string name="update">save</string>
     <string name="eng">eng</string>
     <string name="rus">rus</string>
+    <string name="findsJson">Finds in dir \"&lt;FileName>.json\"</string>
+    <string-array name="DefaultSqlText">
+        <item></item>
+        <item>"select * from sqlite_master"</item>
+        <item>"select name from sqlite_master where type = 'table'"</item>
+    </string-array>
+    <string name="help1">Из основной игры можно в выборе списка перейти в \"Drap and Drop \"
+        в нем три поля: одно верхнее, в нем еще русский текст по умолчанию,\n
+        второе становиться желтым, если верно все собрать,\n
+        в третьем английские буквы.\n
+        Если по верхнему провести горизонтальную линию - во втором divider уберется/появиться и начнется новый раунд.\n
+    </string>
+    <string name="help2">В main game, если провести по фону ( не по кнопкам ), то \n
+    слева-> направо : переключиться на режим повторения repeat activity.
+    справа-> налево: \n
+        ENG_RU -> RU_ENG -> ENGVALUE_ENG -> ENG_ENGVALUE -> ENG_RU....\n
+    Если по фону провести вверх/вниз, то при проведении:\n
+        в левой части вверх:    размер слова увеличится.\n
+        в левой части вниз:     размер кнопок ++..\n
+        в правой части вверх:   размер слова уменьшиться.\n
+        в правой части вниз:    размер кнопок --.\n
+    Размер слова сохраняется в файл при изменении для каждого раунда отдельно для wordView и Buttons отдельно:\n
+        в eng - ru можно сделать большими все;\n
+        в eng_value - eng надо уменьшить wordView (eng_value занимает много строк);\n
+        в eng - eng_value надо уменьшить buttons (eng_value занимает много строк);\n
+    </string>
+    <string name="help3">rus</string>
+    <string name="help4">rus</string>
+    <string name="help5">rus</string>
+
 </resources>

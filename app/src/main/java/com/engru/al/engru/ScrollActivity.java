@@ -12,9 +12,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,8 +27,11 @@ public class ScrollActivity extends Activity {
     EditText editName;
     ListView engIn;
     Button saveButton;
+    ImageView orderView;
     int id;
     String massAdd;
+    boolean order;
+    Animation animCrossFadeIn,animCrossFadeOut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +40,14 @@ public class ScrollActivity extends Activity {
         editName=(EditText)findViewById(R.id.editName);
         engIn=(ListView)findViewById(R.id.engIn);
         saveButton=(Button)findViewById(R.id.saveButton);
+        orderView=(ImageView)findViewById(R.id.orderView);
         this.id=getIntent().getIntExtra("ID",-1);
         massAdd=getIntent().getStringExtra(SettingsActivity.MASS_ADD_IN_SCROLL);
+        animCrossFadeIn = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.fade_in);
+        animCrossFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.fade_out);
+        order=true;
         reloadAllViewAndData();
     }
     @Override protected void onRestart (){
@@ -64,14 +76,17 @@ public class ScrollActivity extends Activity {
         }else{
             fillView(Scroll.get(id));
             if(massAdd==null){
-            Cursor cursor = BaseORM.db.rawQuery("SELECT "
-                    + ScrollEngWordsAdapter.Table.TABLE_NAME+"._id, "
-                    + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ENG_ID +" , "
-                    + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ENG
-                    + " from " + ScrollEngWordsAdapter.Table.TABLE_NAME
-                    + " LEFT JOIN " + EngWord.Table.TABLE_NAME + " ON "
-                    + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ID
-                    + " WHERE " + ScrollEngWordsAdapter.Table.SCROLL_ID + " = ? ;", new String[]{Integer.toString(id)});
+                String sql="SELECT "
+                        + ScrollEngWordsAdapter.Table.TABLE_NAME+"._id, "
+                        + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ENG_ID +" , "
+                        + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ENG
+                        + " from " + ScrollEngWordsAdapter.Table.TABLE_NAME
+                        + " LEFT JOIN " + EngWord.Table.TABLE_NAME + " ON "
+                        + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ID
+                        + " WHERE " + ScrollEngWordsAdapter.Table.SCROLL_ID + " = ? " +
+                        " ORDER BY ";
+                sql+=order?(EngWord.Table.TABLE_NAME+"."+EngWord.Table.ENG +";"):(EngWord.Table.TABLE_NAME+"."+EngWord.Table.DATE_CREATE +";");
+            Cursor cursor = BaseORM.get_db().rawQuery(sql, new String[]{Integer.toString(id)});
             engIn.setAdapter(new scrollToWordCursorAdapterForMove(this,cursor));
             engIn.setOnItemClickListener(new OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view,
@@ -83,7 +98,7 @@ public class ScrollActivity extends Activity {
                 });
             return;
             }else{
-                Cursor cursor=getMassAddCursor(id);
+                Cursor cursor=getMassAddCursor(id,order);
                 scrollToWordCursorAdapterForMove adapter=new scrollToWordCursorAdapterForMove(this,cursor);
                 adapter.mass_add=true;
                 engIn.setAdapter(adapter);
@@ -105,8 +120,6 @@ public class ScrollActivity extends Activity {
                             if (status!=null){
                                 ErrorActivity.throwError(ScrollActivity.this,"Попытка удалить\n"+status);
                             }
-                            Cursor newCursor=getMassAddCursor(ScrollActivity.this.id);
-                            ((scrollToWordCursorAdapterForMove)parent.getAdapter()).changeCursor( newCursor );
                         }else if (v.getCurrentTextColor()==Color.GREEN){
                             ScrollEngWordsAdapter newObject = new ScrollEngWordsAdapter();
                             newObject.eng_id=(int)id;
@@ -115,9 +128,9 @@ public class ScrollActivity extends Activity {
                             if (status!=null){
                                 ErrorActivity.throwError(ScrollActivity.this,status);
                             }
-                            Cursor newCursor=getMassAddCursor(ScrollActivity.this.id);
-                            ((scrollToWordCursorAdapterForMove)parent.getAdapter()).changeCursor( newCursor );
                         }
+                        Cursor newCursor=getMassAddCursor(ScrollActivity.this.id,order);
+                        ((scrollToWordCursorAdapterForMove)parent.getAdapter()).changeCursor( newCursor );
                     }
                 });
                 return;
@@ -127,18 +140,18 @@ public class ScrollActivity extends Activity {
     public void ScrollActivity_reload(View view){
         reloadAllViewAndData();
     }
-    public static Cursor getMassAddCursor(int id){
-        Cursor cursor = BaseORM.db.rawQuery("SELECT "
-                        + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ID+","
-                        + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ENG + " , "
-                        + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ID + " AS "+ScrollEngWordsAdapter.Table.SCROLL_COUNT_AS
-                        + " from " + EngWord.Table.TABLE_NAME
-                        + " LEFT JOIN " + ScrollEngWordsAdapter.Table.TABLE_NAME + " ON "
-                        + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ID
-                        + " AND " + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.SCROLL_ID + " = ? "
-                        + " ORDER BY "+ EngWord.Table.TABLE_NAME+"."+EngWord.Table.ENG +";"
-
-                ,new String[]{Integer.toString(id)});
+    public static Cursor getMassAddCursor(int id,boolean order){
+        String sql="SELECT "
+                + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ID+","
+                + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ENG + " , "
+                + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ID + " AS "+ScrollEngWordsAdapter.Table.SCROLL_COUNT_AS
+                + " from " + EngWord.Table.TABLE_NAME
+                + " LEFT JOIN " + ScrollEngWordsAdapter.Table.TABLE_NAME + " ON "
+                + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ID
+                + " AND " + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.SCROLL_ID + " = ? "
+                + " ORDER BY ";
+        sql+=order?(EngWord.Table.TABLE_NAME+"."+EngWord.Table.ENG +";"):(EngWord.Table.TABLE_NAME+"."+EngWord.Table.DATE_CREATE +";");
+        Cursor cursor = BaseORM.get_db().rawQuery(sql,new String[]{Integer.toString(id)});
         return cursor;
     }
     public void ScrollActivity_save(View view){
@@ -183,5 +196,18 @@ public class ScrollActivity extends Activity {
             builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
                     .setNegativeButton("No", dialogClickListener).show();
         }
+    }
+    public void onClickOrder(View v){
+        if(order){
+            orderView.startAnimation(animCrossFadeOut);//исчезновение
+            orderView.setImageResource(R.drawable.baseline_date_range_black_24dp);
+            orderView.startAnimation(animCrossFadeIn);//появление
+        }else{
+            orderView.startAnimation(animCrossFadeOut);//исчезновение
+            orderView.setImageResource(R.drawable.baseline_text_rotate_vertical_black_24dp);
+            orderView.startAnimation(animCrossFadeIn);//появление
+        }
+        order=!order;
+        reloadAllViewAndData();
     }
 }

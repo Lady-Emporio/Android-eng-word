@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/defaultFormBackground"
+    android:orientation="vertical">
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <Button
+                android:id="@+id/randomGame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/default_background_button"
+                android:onClick="onClickChoose"
+                android:text="random game" />
+
+            <Button
+                android:id="@+id/verbs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/default_background_button"
+                android:onClick="onClickChoose"
+                android:text="irregular verbs" />
+
+            <Button
+                android:id="@+id/openBrowser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/default_background_button"
+                android:onClick="onClickChoose"
+                android:text="Browser"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/openWords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/default_background_button"
+                android:onClick="onClickChoose"
+                android:text="Words"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/openScrolls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/default_background_button"
+                android:onClick="onClickChoose"
+                android:text="Scrolls"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/downloadFromFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/default_background_button"
+                android:onClick="onClickChoose"
+                android:text="From file..."
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/functionalButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/default_background_button"
+                android:onClick="onClickChoose"
+                android:text="Functional"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>

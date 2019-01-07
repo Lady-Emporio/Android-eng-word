@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transition xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:drawable="@drawable/baseline_text_rotate_vertical_black_24dp" />
+    <item android:drawable="@drawable/baseline_date_range_black_24dp" />
+
+</transition>

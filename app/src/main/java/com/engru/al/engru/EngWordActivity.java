@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -57,7 +58,6 @@ public class EngWordActivity extends Activity {
             ruEdit.setText("");
             saveButton.setText("create");
         }
-
     }
     public void reloadAllViewAndData(){
         if(id==-1){
@@ -112,7 +112,7 @@ public class EngWordActivity extends Activity {
         }
     }
     public static Cursor getNewCursorForList(int id){
-        Cursor cursor=BaseORM.db.rawQuery("SELECT "
+        Cursor cursor=BaseORM.get_db().rawQuery("SELECT "
                         + Scroll.Table.TABLE_NAME+"."+Scroll.Table.ID + " , "
                         + Scroll.Table.NAME + " , " + " ifnull( "
                         + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ID  + ",-1) AS "+ ScrollEngWordsAdapter.Table.ID_AS + " , "

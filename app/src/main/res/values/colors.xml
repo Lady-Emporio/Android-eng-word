@@ -9,5 +9,12 @@
     <color name="trueButton">#12e219</color>
     <color name="trueText">#060125</color>
     <color name="drapAndDropEnable">#11e747</color>
-    <color name="drapAndDropUnavailable">#037333</color>
+    <color name="drapAndDropUnavailable">#09f1fd</color>
+    <color name="trueLayout">#a8ff3e</color>
+
+    <color name="defaultFormBackground">#cfd8dc</color>
+    <color name="defaultButtonBackground">#43a047</color>
+    <color name="pressedButtonBackground">#4db6ac</color>
+    <color name="hoverFocusedButtonBackground">#b71c1c</color>
+    <color name="defaultEditView">#98e5ff</color>
 </resources>

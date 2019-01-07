@@ -59,7 +59,7 @@ public class RepeatActivity extends Activity {
                 }
             }
             sql+=" ORDER BY "+ EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG +"; ";
-            cursor = BaseORM.db.rawQuery(sql, id_for_query );
+            cursor = BaseORM.get_db().rawQuery(sql, id_for_query );
             wordsList=new ArrayList<HashMap<String, String>>(cursor.getCount());
             while (cursor.moveToNext()){
                 HashMap<String, String> word=new HashMap<String, String>();

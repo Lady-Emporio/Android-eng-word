@@ -20,17 +20,17 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/backGame"
+                android:id="@+id/sortImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:adjustViewBounds="false"
                 android:background="@null"
                 android:cropToPadding="false"
-                android:onClick="backToGame"
+                android:onClick="changeSort"
                 android:paddingLeft="5dp"
                 android:paddingRight="15dp"
-                android:src="@drawable/baseline_first_page_black_24dp" />
+                android:src="@drawable/baseline_text_rotate_vertical_black_24dp" />
 
             <Spinner
                 android:id="@+id/chooseMode"

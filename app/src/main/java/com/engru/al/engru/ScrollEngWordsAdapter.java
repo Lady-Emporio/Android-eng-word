@@ -39,9 +39,9 @@ public class ScrollEngWordsAdapter extends BaseORM {
         fields.put(ScrollEngWordsAdapter.Table.SCROLL_ID, scroll_id);
         try{
             if(-1==id){
-                id=(int)db.insert(ScrollEngWordsAdapter.Table.TABLE_NAME, null, fields);
+                id=(int)get_db().insert(ScrollEngWordsAdapter.Table.TABLE_NAME, null, fields);
             }else{
-                db.update(ScrollEngWordsAdapter.Table.TABLE_NAME, fields, " _id = ? ", new String[]{ Integer.toString(id)});
+                get_db().update(ScrollEngWordsAdapter.Table.TABLE_NAME, fields, " _id = ? ", new String[]{ Integer.toString(id)});
             }
         }catch (Exception e){
             return e.toString();
@@ -50,7 +50,7 @@ public class ScrollEngWordsAdapter extends BaseORM {
     }
     @Override public String delete(){//if good return null else return Error.toString
         try{
-            db.delete(ScrollEngWordsAdapter.Table.TABLE_NAME , "_id = ? ", new String[]{ Integer.toString(id)});
+            get_db().delete(ScrollEngWordsAdapter.Table.TABLE_NAME , "_id = ? ", new String[]{ Integer.toString(id)});
         }
         catch (Exception e){
             return e.toString();
@@ -58,7 +58,7 @@ public class ScrollEngWordsAdapter extends BaseORM {
         return null;
     }
     public static ScrollEngWordsAdapter get(int id){//if good return ScrollEngWordsAdapter else return null
-        Cursor cursor = db.rawQuery("select * from " + ScrollEngWordsAdapter.Table.TABLE_NAME +"  where _id = ?" , new String[]{ Integer.toString(id)});
+        Cursor cursor = get_db().rawQuery("select * from " + ScrollEngWordsAdapter.Table.TABLE_NAME +"  where _id = ?" , new String[]{ Integer.toString(id)});
         if(!cursor.moveToNext()){
             return null;
         }else{
