@@ -1,10 +1,8 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -18,16 +16,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
-import java.util.HashMap;
-import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {
-    public final static String ENG_MODE="Eng words";
-    public final static String SCROLL_MODE="Scrolls";
-    public final static String MASS_ADD_IN_SCROLL="Mass add in Scrolls";
+    enum MODES{ENG_MODE,SCROLL_MODE,MASS_ADD_IN_SCROLL};
     private final static String GET_KEY_MODE="GET_KEY_MODE";
     boolean order;
-    public static String actualMode;
+    private MODES actualMode;
     Spinner chooseMode;
     ListView listDinamic;
     EditText filterView;
@@ -44,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
             filterView = (EditText) findViewById(R.id.filterView);
             fab = (FloatingActionButton) findViewById(R.id.fab);
             sortImage = (ImageView) findViewById(R.id.sortImage);
-
+            actualMode=null;
             animCrossFadeIn = AnimationUtils.loadAnimation(getApplicationContext(),
                     R.anim.fade_in);
             animCrossFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -53,7 +47,11 @@ public class SettingsActivity extends AppCompatActivity {
             adapterForlistDinamic=new DimanicListCursor(this, null,null);
             listDinamic.setAdapter(adapterForlistDinamic);
 
-            String[] modesList = new String[]{ENG_MODE,SCROLL_MODE,MASS_ADD_IN_SCROLL};
+            MODES[]modes=MODES.values();
+            String[]modesList=new String[modes.length];
+            for(int i=0;i!=modesList.length;++i){
+                modesList[i]=modes[i].toString();
+            }
             chooseMode.setAdapter(new CustomSpinnerDropDownView(SettingsActivity.this, R.layout.dinamic_list_item, modesList));
 
             chooseMode.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -62,19 +60,19 @@ public class SettingsActivity extends AppCompatActivity {
 
                     try{
                         filterView.setText("");
-                    String item = (String) parent.getItemAtPosition(position);
-                    if(item.equals(ENG_MODE)){
-                        actualMode=item;
-                        changeModeView(null);
-                    }else if(item.equals(SCROLL_MODE)){
-                        actualMode=item;
-                        changeModeView(null);
-                    }else if(item.equals(MASS_ADD_IN_SCROLL)){
-                        actualMode=item;
-                        changeModeView(null);
-                    }else{
-                        ErrorActivity.throwError(SettingsActivity.this,"Неожиданный mode, который не обрабатывается в onItemSelected.");
-                    }
+                        String item = ((String) parent.getItemAtPosition(position)).toString();
+                        if(item.equals( MODES.ENG_MODE.toString() )){
+                            actualMode=MODES.ENG_MODE;
+                            changeModeView(null);
+                        }else if(item.equals( MODES.SCROLL_MODE.toString() )){
+                            actualMode=MODES.SCROLL_MODE;
+                            changeModeView(null);
+                        }else if(item.equals( MODES.MASS_ADD_IN_SCROLL.toString() )){
+                            actualMode=MODES.MASS_ADD_IN_SCROLL;
+                            changeModeView(null);
+                        }else{
+                            ErrorActivity.throwError(SettingsActivity.this,"Неожиданный mode, который не обрабатывается в onItemSelected.");
+                        }
                     }catch(Exception e){
                         ErrorActivity.throwError(SettingsActivity.this,e.toString());
                     }
@@ -88,38 +86,36 @@ public class SettingsActivity extends AppCompatActivity {
             listDinamic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(actualMode.equals(ENG_MODE)){
+                    if(actualMode==MODES.ENG_MODE){
                         EngWordActivity.openEngWordActivity(SettingsActivity.this,(int)id);
-                    }else if(actualMode.equals(SCROLL_MODE)){
+                    }else if(actualMode==MODES.SCROLL_MODE){
                         ScrollActivity.openScrollActivity(SettingsActivity.this,(int)id);
-                    }else if(actualMode.equals(MASS_ADD_IN_SCROLL)){
-                        //ScrollActivity.openScrollActivity(SettingsActivity.this,(int)id);
+                    }else if(actualMode==MODES.MASS_ADD_IN_SCROLL){
                         Intent intent = new Intent( SettingsActivity.this,ScrollActivity.class );
                         intent.putExtra("ID",(int)id);
-                        intent.putExtra(MASS_ADD_IN_SCROLL,MASS_ADD_IN_SCROLL);
+                        intent.putExtra(MODES.MASS_ADD_IN_SCROLL.toString(),"0");//Тут может быть любое значение, главное не null
                         SettingsActivity.this.startActivity( intent );
                     }
                 }
             });
-
             Intent x=getIntent();
             String mode=x.getStringExtra(GET_KEY_MODE);
             if(mode!=null){
-                switch (mode){
-                    case ENG_MODE:
-                        actualMode=ENG_MODE;
-                        break;
-                    case SCROLL_MODE:
-                        actualMode=SCROLL_MODE;
-                        break;
+                if(mode.equals( MODES.ENG_MODE.toString()  )){
+                    actualMode=MODES.ENG_MODE;
+                }else if(mode.equals( MODES.SCROLL_MODE.toString())){
+                    actualMode=MODES.SCROLL_MODE;
+                }
+                if(actualMode!=null){
+                    for (int position = 0; position < chooseMode.getAdapter().getCount(); position++) {
+                        if(chooseMode.getAdapter().getItem(position).equals(actualMode.toString())) {
+                            chooseMode.setSelection(position);
+                            break;
+                        }
+                    }
                 }
             }
-            for (int position = 0; position < chooseMode.getAdapter().getCount(); position++) {
-                if(chooseMode.getAdapter().getItem(position) == actualMode) {
-                    chooseMode.setSelection(position);
-                    break;
-                }
-            }
+
         }catch (Exception e){
             ErrorActivity.throwError(SettingsActivity.this,e.toString());
         }
@@ -130,14 +126,16 @@ public class SettingsActivity extends AppCompatActivity {
     }
     public void changeModeView(String filter){
         try{
-        if(actualMode.equals(ENG_MODE)){
+        if(actualMode==MODES.ENG_MODE){
             setENG_MODE(filter);
             fab.show();
-        }else if(actualMode.equals(SCROLL_MODE)){
+        }else if(actualMode==MODES.SCROLL_MODE){
             setSCROLL_MODE(filter);
+            sortImage.setImageResource(R.drawable.baseline_text_rotate_vertical_black_24dp);
             fab.show();
-        }else if(actualMode.equals(MASS_ADD_IN_SCROLL)){
+        }else if(actualMode==MODES.MASS_ADD_IN_SCROLL){
             setSCROLL_MODE(filter);
+            sortImage.setImageResource(R.drawable.baseline_text_rotate_vertical_black_24dp);
             fab.hide();
         }else{
             ErrorActivity.throwError(SettingsActivity.this,"Неожиданный mode, который не обрабатывается в changeModeView.");
@@ -189,7 +187,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
     public void changeSort(View view) {
-        if(actualMode!=ENG_MODE){
+        if(actualMode!=MODES.ENG_MODE){
             return;
         }
         if(order){
@@ -210,9 +208,9 @@ public class SettingsActivity extends AppCompatActivity {
         from.startActivity(intent);
     }
     public void fabAddNew(View view){
-        if(actualMode.equals(ENG_MODE)){
+        if(actualMode==MODES.ENG_MODE){
             EngWordActivity.openEngWordActivity(SettingsActivity.this,-1);
-        }else if(actualMode.equals(SCROLL_MODE)){
+        }else if(actualMode==MODES.SCROLL_MODE){
             ScrollActivity.openScrollActivity(SettingsActivity.this,-1);
         }
     }

@@ -1,16 +1,12 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
-import android.util.Log;
-
-import java.io.File;
 
 public class HelperSQL extends SQLiteOpenHelper {
-    private static int version=2;
+    private static int version=4;
     private static String My_DB_NAME="My_db";
     public HelperSQL(Context context) {
         super(context, My_DB_NAME, null, version);

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.engru.al.engru">
+    package="com.engru.al.Dream">
 
     <application
-        android:name=".MyApplication"
+        android:name="com.engru.al.Dream.MyApplication"
         android:icon="@drawable/ic_launcher_unicorn"
         android:label="@string/app_name">
         <activity
-            android:name=".MainGameActivity"
+            android:name="com.engru.al.Dream.MainGameActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.engru.al.Dream.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ErrorActivity"
+            android:name="com.engru.al.Dream.ErrorActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
@@ -27,27 +27,27 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".ScrollActivity"
+            android:name="com.engru.al.Dream.ScrollActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".EngWordActivity"
+            android:name="com.engru.al.Dream.EngWordActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".RepeatActivity"
+            android:name="com.engru.al.Dream.RepeatActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".GameDragAndDropActivity"
+            android:name="com.engru.al.Dream.GameDragAndDropActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ActivityMenu"
+            android:name="com.engru.al.Dream.ActivityMenu"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden">
@@ -57,19 +57,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivitySqlBrowser"
+        <activity android:name="com.engru.al.Dream.ActivitySqlBrowser"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ActivityFromFile"
+        <activity android:name="com.engru.al.Dream.ActivityFromFile"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ActivityHelp"
+        <activity android:name="com.engru.al.Dream.ActivityHelp"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ActivityIrregularVerbs"
+        <activity android:name="com.engru.al.Dream.ActivityIrregularVerbs"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden"></activity>

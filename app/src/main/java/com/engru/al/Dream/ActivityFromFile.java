@@ -1,4 +1,4 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,8 +7,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.InputType;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,12 +23,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ActivityFromFile extends Activity {
     TextView pathToDir;

@@ -1,10 +1,8 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
 import android.app.Application;
 import android.os.Environment;
-import android.util.Log;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
@@ -30,10 +28,10 @@ public class MyApplication extends Application {
     public void LaunchExampleFileJson(){
         try{
             String exampleText="{\n" +
-                    "\t\"engWordsTables\":[\n" +
-                    "\t\t{\"eng\":\"horn\",\"ru\":\"рог\",\"eng_value\"=\"one of the two hard, pointed growths on the heads of cows, goats, and some other animals\",\"EXAMPLE\"=\"\"},\n" +
-                    "\t\t{\"eng\":\"flutter\",\"ru\":\"колыхаться, развеваться\",\"eng_value\"=\"to move quickly and gently up and down or from side to side in the air, or to make something move in this way\",\"EXAMPLE\"=\"The flag was fluttering in the breeze.\"},\n" +
-                    "\t\t{\"eng\":\"shy\",\"ru\":\"застенчивый, стеснительный\",\"eng_value\"=\"not confident, especially about meeting or talking to new people\",\"EXAMPLE\"=\"He was too shy to say anything to her.\"}\n" +
+                    "\t\""+EngWord.Table.TABLE_NAME+"\":[\n" +
+                    "\t\t{\""+EngWord.Table.ENG+"\":\"horn\",\""+EngWord.Table.RU+"\":\"рог\",\""+EngWord.Table.ENG_VALUE+"\":\"one of the two hard, pointed growths on the heads of cows, goats, and some other animals\",\""+EngWord.Table.EXAMPLE+"\":\"And then as they grow older, the horns grow forward.\"},\n" +
+                    "\t\t{\""+EngWord.Table.ENG+"\":\"flutter\",\""+EngWord.Table.RU+"\":\"колыхаться, развеваться\",\""+EngWord.Table.ENG_VALUE+"\":\"to move quickly and gently up and down or from side to side in the air, or to make something move in this way\",\""+EngWord.Table.EXAMPLE+"\":\"The flag was fluttering in the breeze.\"},\n" +
+                    "\t\t{\""+EngWord.Table.ENG+"\":\"shy\",\""+EngWord.Table.RU+"\":\"застенчивый, стеснительный\",\""+EngWord.Table.ENG_VALUE+"\":\"not confident, especially about meeting or talking to new people\",\""+EngWord.Table.EXAMPLE+"\":\"He was too shy to say anything to her.\"}\n" +
                     "\t]\n" +
                     "}";
             String state = Environment.getExternalStorageState();

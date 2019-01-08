@@ -1,8 +1,6 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
 import android.content.ContentValues;
-
-import java.util.ArrayList;
 
 public class IrregularVerbs extends BaseORM{
     int id;

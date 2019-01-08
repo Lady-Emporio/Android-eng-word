@@ -1,4 +1,4 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -7,8 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,7 +40,7 @@ public class ScrollActivity extends Activity {
         saveButton=(Button)findViewById(R.id.saveButton);
         orderView=(ImageView)findViewById(R.id.orderView);
         this.id=getIntent().getIntExtra("ID",-1);
-        massAdd=getIntent().getStringExtra(SettingsActivity.MASS_ADD_IN_SCROLL);
+        massAdd=getIntent().getStringExtra(SettingsActivity.MODES.MASS_ADD_IN_SCROLL.toString());//Главное, что не null
         animCrossFadeIn = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.fade_in);
         animCrossFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),

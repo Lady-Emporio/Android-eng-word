@@ -1,24 +1,16 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -28,17 +20,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.content.Intent;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import android.view.View.OnTouchListener;
+
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 public class MainGameActivity extends Activity {
     public static MainGameActivity game;
@@ -192,6 +179,7 @@ public class MainGameActivity extends Activity {
     public void showList(View view) {
         switch(secondRow.getVisibility()){
             case View.VISIBLE:
+                secondRow.setVisibility(View.GONE);
                 return;
             case View.GONE:
                 secondRow.setVisibility(View.VISIBLE);

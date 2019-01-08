@@ -1,9 +1,8 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,8 +1,7 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 public class ActivityMenu extends Activity {
@@ -24,10 +23,10 @@ public class ActivityMenu extends Activity {
                 ActivitySqlBrowser.openSqlBrowserActivity(ActivityMenu.this);
                 break;
             case R.id.openWords:
-                SettingsActivity.openSettingsActivity(ActivityMenu.this,SettingsActivity.ENG_MODE);
+                SettingsActivity.openSettingsActivity(ActivityMenu.this,SettingsActivity.MODES.ENG_MODE.toString());
                 break;
             case R.id.openScrolls:
-                SettingsActivity.openSettingsActivity(ActivityMenu.this,SettingsActivity.SCROLL_MODE);
+                SettingsActivity.openSettingsActivity(ActivityMenu.this,SettingsActivity.MODES.SCROLL_MODE.toString());
                 break;
             case R.id.functionalButton:
                 ActivityHelp.openActivityHelp(ActivityMenu.this);

@@ -1,4 +1,4 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
 import android.database.sqlite.SQLiteDatabase;
 

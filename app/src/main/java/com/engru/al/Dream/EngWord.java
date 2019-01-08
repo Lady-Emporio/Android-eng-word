@@ -1,9 +1,8 @@
-package com.engru.al.engru;
+package com.engru.al.Dream;
 
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 public class EngWord extends BaseORM {
     int id;
@@ -19,14 +18,14 @@ public class EngWord extends BaseORM {
         example="";
     }
     static class Table{
-        public static final String TABLE_NAME="engWordsTables";
+        public static final String TABLE_NAME="eng_words_tables";
         public static final String ID="_id";
         public static final String DATE_CREATE="date_create";
         public static final String ID_AS="EngWord_id";
         public static final String ENG="eng";
         public static final String RU="ru";
         public static final String ENG_VALUE="eng_value";
-        public static final String EXAMPLE="EXAMPLE";;
+        public static final String EXAMPLE="example";;
         public static final String CREATE_TABLES="CREATE TABLE "+ TABLE_NAME + " ( "
                 + " _id INTEGER PRIMARY KEY, "
                 + DATE_CREATE + " TEXT DEFAULT (DATETIME('now')), " //A date in a format like "YYYY-MM-DD HH:MM:SS.SSS"
