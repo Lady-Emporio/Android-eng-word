@@ -69,6 +69,16 @@
                 android:textAllCaps="false" />
 
             <Button
+                android:id="@+id/massAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/default_background_button"
+                android:onClick="onClickChoose"
+                android:text="Mass add"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/downloadFromFile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

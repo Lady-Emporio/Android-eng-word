@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,9 +17,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
-    enum MODES{ENG_MODE,SCROLL_MODE,MASS_ADD_IN_SCROLL};
+    enum MODES{ENG_MODE,SCROLL_MODE,MASS_ADD_IN_SCROLL,MASS_DELETE};
     private final static String GET_KEY_MODE="GET_KEY_MODE";
     boolean order;
     private MODES actualMode;
@@ -70,6 +72,9 @@ public class SettingsActivity extends AppCompatActivity {
                         }else if(item.equals( MODES.MASS_ADD_IN_SCROLL.toString() )){
                             actualMode=MODES.MASS_ADD_IN_SCROLL;
                             changeModeView(null);
+                        }else if(item.equals( MODES.MASS_DELETE.toString() )){
+                            actualMode=MODES.MASS_DELETE;
+                            changeModeView(null);
                         }else{
                             ErrorActivity.throwError(SettingsActivity.this,"Неожиданный mode, который не обрабатывается в onItemSelected.");
                         }
@@ -95,6 +100,22 @@ public class SettingsActivity extends AppCompatActivity {
                         intent.putExtra("ID",(int)id);
                         intent.putExtra(MODES.MASS_ADD_IN_SCROLL.toString(),"0");//Тут может быть любое значение, главное не null
                         SettingsActivity.this.startActivity( intent );
+                    }else if(actualMode==MODES.MASS_DELETE){
+                        int countRowDelete=EngWord.transferFromEngWordToDoubleTable((int)id);
+                        if(countRowDelete==0){
+                            Cursor c=(Cursor)parent.getAdapter().getItem(position);
+                            StringBuffer message=new StringBuffer();
+                            message.append("Already delete:\n");
+                            for(int i=0;i!=c.getColumnCount();++i){
+                                message.append(c.getString(i));
+                                message.append(" |\n");
+                            }
+                            message.append("Refresh list. Automatically not refresh because its is mass delete without delay (empty filter is refresh)");
+                            Toast toast = Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+
                     }
                 }
             });
@@ -105,6 +126,8 @@ public class SettingsActivity extends AppCompatActivity {
                     actualMode=MODES.ENG_MODE;
                 }else if(mode.equals( MODES.SCROLL_MODE.toString())){
                     actualMode=MODES.SCROLL_MODE;
+                }else if(mode.equals( MODES.MASS_ADD_IN_SCROLL.toString())){
+                    actualMode=MODES.MASS_ADD_IN_SCROLL;
                 }
                 if(actualMode!=null){
                     for (int position = 0; position < chooseMode.getAdapter().getCount(); position++) {
@@ -137,6 +160,9 @@ public class SettingsActivity extends AppCompatActivity {
             setSCROLL_MODE(filter);
             sortImage.setImageResource(R.drawable.baseline_text_rotate_vertical_black_24dp);
             fab.hide();
+        }else if(actualMode==MODES.MASS_DELETE){
+            setENG_MODE(filter);
+            fab.hide();
         }else{
             ErrorActivity.throwError(SettingsActivity.this,"Неожиданный mode, который не обрабатывается в changeModeView.");
         }
@@ -147,15 +173,16 @@ public class SettingsActivity extends AppCompatActivity {
     }
     private void setENG_MODE(String filter){
         Cursor cursor;
+        String isOrder=order?(EngWord.Table.ENG + ";"):(EngWord.Table.DATE_CREATE + " DESC; ");
         if(filter ==null){
             String sql="SELECT _id, " + EngWord.Table.ENG + " from " + EngWord.Table.TABLE_NAME + " ORDER BY ";
-            sql+=order? (EngWord.Table.ENG + " ; "):(EngWord.Table.DATE_CREATE + " ; ");
+            sql+=isOrder;
             cursor = BaseORM.get_db().rawQuery(sql, null);
         }else{
             filter="%"+filter+"%";
             String sql="SELECT _id, " + EngWord.Table.ENG + " from " + EngWord.Table.TABLE_NAME
                     + " WHERE _id LIKE ? OR " + EngWord.Table.ENG + " LIKE ? " +" ORDER BY ";
-            sql+=order?(EngWord.Table.ENG + ";"):(EngWord.Table.DATE_CREATE + " ; ");
+            sql+=isOrder;
             cursor = BaseORM.get_db().rawQuery(sql, new String []{ filter,filter } ) ;
         }
         DimanicListCursor adapter = (DimanicListCursor) listDinamic.getAdapter();

@@ -1,10 +1,22 @@
 package com.engru.al.Dream;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 public class MyApplication extends Application {
@@ -14,12 +26,15 @@ public class MyApplication extends Application {
         super.onCreate();
         try {
             if (BaseORM.get_db() == null) {
-                BaseORM.setDB(new HelperSQL(this).getWritableDatabase());
+                HelperSQL initDB=new HelperSQL(this);
+                BaseORM.setDB(initDB.getWritableDatabase());
+                EngWord x=EngWord.get(2);
             }
         }catch (Exception e){
             ErrorActivity.throwError(this,"Не получается получить базу в BaseORM.setDB(new HelperSQL(this).getWritableDatabase(). Невозможно дальше продолжать"+e.toString());
         }
         LaunchExampleFileJson();
+
     }
     @Override
     public void onTerminate() {
@@ -54,4 +69,77 @@ public class MyApplication extends Application {
             ErrorActivity.throwError(this,"Не получается создать example.json для примера загрузки из файла:\n"+e.toString());
         }
     }
+
+    public static void downloadFromAssets(Context context, SQLiteDatabase db){
+        AssetManager am = context.getAssets();
+        String []path;
+        try{
+            path=am.list("");
+        }catch (Exception e){
+            Toast.makeText(context, "При запуске загрузить из файлов данные не получилось - " +
+                            "не на что не влияет, просто список слов по умолчанию будет поменьше. " +
+                            "Ручками надо будет загрузить. Но ошибка странная - не получилось получить список файлов в Assets директории. Удивительно. Error:"+e.toString(),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        for(int n=0;n!=path.length;++n){
+            String fileName=path[n];
+            if(!fileName.endsWith(".json")){
+                continue;
+            }
+            try {
+                InputStream is = am.open(fileName);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append("\n");
+                }
+                reader.close();
+                String result = sb.toString();
+
+                JSONObject object=new JSONObject(result);
+                JSONArray jArray = object.getJSONArray(EngWord.Table.TABLE_NAME);
+                for (int i=0;i!=jArray.length();++i){
+                    JSONObject newWord=(JSONObject)jArray.get(i);
+                    String eng="";
+                    String ru="";
+                    String engValue="";
+                    String example="";
+                    if(newWord.has(EngWord.Table.ENG)){
+                        eng=newWord.getString(EngWord.Table.ENG);
+                    }
+                    if(newWord.has(EngWord.Table.RU)){
+                        ru=newWord.getString(EngWord.Table.RU);
+                    }
+                    if(newWord.has(EngWord.Table.ENG_VALUE)){
+                        engValue=newWord.getString(EngWord.Table.ENG_VALUE);
+                    }
+                    if(newWord.has(EngWord.Table.EXAMPLE)){
+                        example=newWord.getString(EngWord.Table.EXAMPLE);
+                    }
+                    EngWord word=new EngWord();
+                    word.eng=eng;
+                    word.ru=ru;
+                    word.eng_value=engValue;
+                    word.example=example;
+                    String status=word.save(db);
+                    if(status!=null){
+                        Log.d("q1",status);
+                        continue;
+                    }
+                }
+            }catch(Exception e){
+                Toast.makeText(context, "Не получилось по умолчанию загрузить данные из файла: "+
+                                fileName+"| Ни на что не влияет. Просто начальных слов будет меньше. "+e.toString(),
+                        Toast.LENGTH_LONG).show();
+                continue;
+            }
+
+
+            }
+
+
+    }
+
 }

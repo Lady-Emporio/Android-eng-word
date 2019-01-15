@@ -38,9 +38,9 @@ public class GameDragAndDropActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_drag_and_drop);
-        trueView=(TextView)findViewById(R.id.trueView);
-        flexLayout=(FlexboxLayout)findViewById(R.id.flexLayout);
-        layoutForEdit=(FlexboxLayout)findViewById(R.id.layoutForEdit);
+        trueView=findViewById(R.id.trueView);
+        flexLayout=findViewById(R.id.flexLayout);
+        layoutForEdit=findViewById(R.id.layoutForEdit);
         position_Index=0;
         isSpaceBetweenInputWord=false;
         needNewRound=true;
@@ -72,6 +72,10 @@ public class GameDragAndDropActivity extends Activity {
             }
             sql+=" ORDER BY "+ EngWord.Table.TABLE_NAME + "." + EngWord.Table.ENG +"; ";
             Cursor cursor = BaseORM.get_db().rawQuery(sql, id_for_query );
+            if(cursor.getCount()==0){
+                trueView.setText("Scroll(s) not having words");
+                return;
+            }
             wordsList=new ArrayList<HashMap<String, String>>(cursor.getCount());
             while (cursor.moveToNext()){
                 HashMap<String, String> word=new HashMap<String, String>();
@@ -85,7 +89,7 @@ public class GameDragAndDropActivity extends Activity {
             maxPosition_Number=wordsList.size();
             Collections.shuffle(wordsList);
         }else{
-            trueView.setText("Error with scrolls");
+            trueView.setText("Error with scrolls. Not choose scroll");
             return;
         }
         layoutForEdit.setOnClickListener(new View.OnClickListener() {

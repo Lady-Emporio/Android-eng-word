@@ -17,4 +17,6 @@
     <color name="pressedButtonBackground">#4db6ac</color>
     <color name="hoverFocusedButtonBackground">#b71c1c</color>
     <color name="defaultEditView">#98e5ff</color>
+    <color name="minSpinnerText">#ff3df2</color>
+    <color name="maxSpinnerText">#dbde36</color>
 </resources>

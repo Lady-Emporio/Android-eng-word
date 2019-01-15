@@ -1,0 +1,109 @@
+{"eng_words_tables":[
+{"eng"		 : "once",
+ "ru" 		 : "(один) раз | когда-то,однажды",
+ "eng_value" : "one time | in the past, but not now",
+ "example"   : "Once upon a time, in a magical land of Equestria..."
+},
+{"eng"		 : "upon",
+ "ru" 		 : "на",
+ "eng_value" : "on a surface of something| as on",
+ "example"   : "Once upon a time, in a magical land of Equestria..."
+},
+{"eng"		 : "regal",
+ "ru" 		 : "королевский",
+ "eng_value" : "very special and suitable for a king or queen",
+ "example"   : "...there were two regal sisters who ruled together..."
+},
+{"eng"		 : "rule",
+ "ru" 		 : "правило",
+ "eng_value" : "an official instruction about what you must or must not do | the usual way something is",
+ "example"   : "...there were two regal sisters who ruled together..."
+},
+{"eng"		 : "elder",
+ "ru" 		 : "старший",
+ "eng_value" : "the older of two brothers/daughters/sisters, etc",
+ "example"   : "To do this, the eldest used her unicorn powers to raise the sun at dawn..."
+},
+{"eng"		 : "raise",
+ "ru" 		 : "увеличивать: повышать, поднимать",
+ "eng_value" : "to increase an amount or level | to lift something to a higher position",
+ "example"   : "To do this, the eldest used her unicorn powers to raise the sun at dawn..."
+},
+{"eng"		 : "dawn",
+ "ru" 		 : "рассвет",
+ "eng_value" : "the early morning when light first appears in the sky",
+ "example"   : "To do this, the eldest used her unicorn powers to raise the sun at dawn..."
+},
+{"eng"		 : "down",
+ "ru" 		 : "(указывает на движение сверху вниз) садиться, класть",
+ "eng_value" : "moving from above and onto a surface",
+ "example"   : "Put that box down on the floor."
+},
+{"eng"		 : "thus",
+ "ru" 		 : "следовательно,таким образом",
+ "eng_value" : "used after saying a fact to introduce what then happened as a result",
+ "example"   : "Thus, the two sisters maintained balance for their kingdom and their subjects"
+},
+{"eng"		 : "maintain",
+ "ru" 		 : "поддерживать, сохранять",
+ "eng_value" : "to make a situation or activity continue in the same way",
+ "example"   : "Thus, the two sisters maintained balance for their kingdom and their subjects"
+},
+{"eng"		 : "resentful",
+ "ru" 		 : "возмущенный, обиженный, задетый чем-либо",
+ "eng_value" : "angry and upset about a situation that you think is unfair",
+ "example"   : "But as time went on, the younger sister became resentful."
+},
+{"eng"		 : "resent",
+ "ru" 		 : "возмущаться,обижаться",
+ "eng_value" : "to feel angry and upset about a situation or about something that someone has done",
+ "example"   : "I resent having to work late."
+},
+{"eng"		 : "relish",
+ "ru" 		 : "получать удовольствие, наслаждаться",
+ "eng_value" : "to enjoy something",
+ "example"   : "The ponies relished and played in the day"
+},
+{"eng"		 : "shun",
+ "ru" 		 : "избегать, держаться в стороне",
+ "eng_value" : "to avoid or ignore someone or something",
+ "example"   : "but shunned and slept through her beautiful night."
+},
+{"eng"		 : "fateful",
+ "ru" 		 : "роковой",
+ "eng_value" : "A fateful event has an important and usually bad effect on the future.",
+ "example"   : "One fateful day, the younger unicorn refused to lower the moon to make way for the dawn."
+},
+{"eng"		 : "refuse",
+ "ru" 		 : "отказываться",
+ "eng_value" : "to say that you will not do or accept something",
+ "example"   : "One fateful day, the younger unicorn refused to lower the moon to make way for the dawn."
+},
+
+{"eng"		 : "wicked",
+ "ru" 		 : "порочный, безнравственный",
+ "eng_value" : "extremely bad and morally wrong",
+ "example"   : "had transformed her into a wicked mare of darkness: Nightmare Moon."
+},
+{"eng"		 : "vow",
+ "ru" 		 : "давать обет, клясться",
+ "eng_value" : "to make a serious promise or decision",
+ "example"   : "She vowed that she would shroud the land in eternal night."
+},
+{"eng"		 : "eternal",
+ "ru" 		 : "вечный",
+ "eng_value" : "continuing forever, or seeming to continue forever",
+ "example"   : "She vowed that she would shroud the land in eternal night."
+},
+{"eng"		 : "reluctantly",
+ "ru" 		 : "делающий что-либо неохотно",
+ "eng_value" : "not wanting to do something",
+ "example"   : "Reluctantly, the elder sister harnessed the most powerful magic known to ponydom"
+},
+{"eng"		 : "harness",
+ "ru" 		 : "укрощать, использовать",
+ "eng_value" : "to control something so that you can use its power or qualities for a particular purpose",
+ "example"   : "Reluctantly, the elder sister harnessed the most powerful magic known to ponydom"
+}
+]
+}

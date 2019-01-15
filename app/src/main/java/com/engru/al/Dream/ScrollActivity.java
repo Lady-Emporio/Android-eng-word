@@ -148,7 +148,7 @@ public class ScrollActivity extends Activity {
                 + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.ENG_ID + " = " + EngWord.Table.TABLE_NAME+"."+EngWord.Table.ID
                 + " AND " + ScrollEngWordsAdapter.Table.TABLE_NAME+"."+ScrollEngWordsAdapter.Table.SCROLL_ID + " = ? "
                 + " ORDER BY ";
-        sql+=order?(EngWord.Table.TABLE_NAME+"."+EngWord.Table.ENG +";"):(EngWord.Table.TABLE_NAME+"."+EngWord.Table.DATE_CREATE +";");
+        sql+=order?(EngWord.Table.TABLE_NAME+"."+EngWord.Table.ENG +";"):(EngWord.Table.TABLE_NAME+"."+EngWord.Table.DATE_CREATE +" DESC;");
         Cursor cursor = BaseORM.get_db().rawQuery(sql,new String[]{Integer.toString(id)});
         return cursor;
     }

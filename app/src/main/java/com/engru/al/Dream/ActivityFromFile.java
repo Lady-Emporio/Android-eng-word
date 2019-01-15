@@ -71,7 +71,7 @@ public class ActivityFromFile extends Activity {
                 sb.append(line).append("\n");
             }
             reader.close();
-            result= sb.toString();;
+            result= sb.toString();
             fin.close();
         }catch (Exception e){
             ErrorActivity.throwError(ActivityFromFile.this,"Не получается прочитать выбранный файл:\n"+e.toString());

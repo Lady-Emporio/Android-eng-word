@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 
 public class ListsListCursor extends CursorAdapter {
+    MainGameActivity game;
     public ListsListCursor(Context context, Cursor cursor) {
         super(context, cursor, 0);
     }
@@ -28,7 +29,7 @@ public class ListsListCursor extends CursorAdapter {
         int count = cursor.getInt(cursor.getColumnIndexOrThrow(ScrollEngWordsAdapter.Table.SCROLL_COUNT_AS));
 
         listName.setText(name);
-        if(MainGameActivity.game.chooseScroll.contains(scrollCheck.getText().toString())){
+        if(game!=null && game.chooseScroll.contains(scrollCheck.getText().toString())){
             listName.setTextColor(Color.BLUE);
         }else{
             listName.setTextColor(Color.BLACK);
@@ -38,11 +39,14 @@ public class ListsListCursor extends CursorAdapter {
         scrollCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(game==null){
+                    return;
+                }
                 CheckBox button=(CheckBox)v;
                 if(button.isChecked()){
-                    MainGameActivity.game.needOpenScroll.add(button.getText().toString());
+                    game.needOpenScroll.add(button.getText().toString());
                 }else{
-                    MainGameActivity.game.needOpenScroll.remove(button.getText().toString());
+                    game.needOpenScroll.remove(button.getText().toString());
                 }
             }});
     }

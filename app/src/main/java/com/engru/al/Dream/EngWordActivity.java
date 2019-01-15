@@ -20,6 +20,8 @@ public class EngWordActivity extends Activity {
     TextView idView;
     EditText engEdit;
     EditText ruEdit;
+    EditText eng_valueEdit;
+    EditText exampleEdit;
     ListView listScrolls;
     Button saveButton;
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,8 @@ public class EngWordActivity extends Activity {
         idView=(TextView)findViewById(R.id.idView);
         engEdit=(EditText)findViewById(R.id.engEdit);
         ruEdit=(EditText)findViewById(R.id.ruEdit);
+        eng_valueEdit=findViewById(R.id.eng_valueEdit);
+        exampleEdit=findViewById(R.id.exampleEdit);
         listScrolls=(ListView)findViewById(R.id.listScrolls);
         saveButton=(Button)findViewById(R.id.saveButton);
         this.id=getIntent().getIntExtra("ID",-1);
@@ -47,11 +51,15 @@ public class EngWordActivity extends Activity {
             idView.setText("№ "+Integer.toString(value.id)+"!");
             engEdit.setText(value.eng);
             ruEdit.setText(value.ru);
+            eng_valueEdit.setText(value.eng_value);
+            exampleEdit.setText(value.example);
             saveButton.setText("save");
         }else{
             idView.setText("New!!!");
             engEdit.setText("");
             ruEdit.setText("");
+            eng_valueEdit.setText("");
+            exampleEdit.setText("");
             saveButton.setText("create");
         }
     }
@@ -125,6 +133,8 @@ public class EngWordActivity extends Activity {
         EngWord newObject=new EngWord();
         newObject.eng=engEdit.getText().toString();
         newObject.ru=ruEdit.getText().toString();
+        newObject.eng_value=eng_valueEdit.getText().toString();
+        newObject.example=exampleEdit.getText().toString();
         newObject.id=id;
         String status=newObject.save();
         if(status!=null){

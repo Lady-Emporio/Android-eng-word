@@ -1,0 +1,118 @@
+{"eng_words_tables":[
+{"eng"		 : "surface",
+ "ru" 		 : "поверхность",
+ "eng_value" : "the top or outside part of something",
+ "example"   : "The sun was reflected on the surface of the water."
+},
+{"eng"		 : "suitable",
+ "ru" 		 : "подходящий, удобный",
+ "eng_value" : "acceptable or right for someone or something",
+ "example"   : "regal - very special and suitable for a king or queen"
+},
+{"eng"		 : "acceptable",
+ "ru" 		 : "приемлемый",
+ "eng_value" : "good enough",
+ "example"   : "suitable - acceptable or right for someone or something"
+},
+{"eng"		 : "enough",
+ "ru" 		 : "достаточно",
+ "eng_value" : "as much as is necessary | as much as or more than you want",
+ "example"   : "They had enough fuel for one week. | Have you had enough to eat?"
+},
+{"eng"		 : "necessary",
+ "ru" 		 : "необходимый",
+ "eng_value" : "needed in order to achieve something",
+ "example"   : "enough - as much as is necessary"
+},
+{"eng"		 : "achieve",
+ "ru" 		 : "достигать",
+ "eng_value" : "to succeed in doing something good, usually by working hard",
+ "example"   : "necessary - needed in order to achieve something"
+},
+{"eng"		 : "amount",
+ "ru" 		 : "количество",
+ "eng_value" : "how much there is of something",
+ "example"   : "raise - to increase an amount or level"
+},
+{"eng"		 : "appear",
+ "ru" 		 : "появляться | казаться",
+ "eng_value" : "to start to be seen | to seem to be a particular thing or have a particular quality",
+ "example"   : "dawn - the early morning when light first appears in the sky"
+},
+{"eng"		 : "quality",
+ "ru" 		 : "качество | черта характера",
+ "eng_value" : "how good or bad something is | part of the character or personality of someone or something",
+ "example"   : "good/high quality, poor/low quality | leadership qualities"
+},
+{"eng"		 : "activity",
+ "ru" 		 : "занятие | деятельность",
+ "eng_value" : "something that you do for enjoyment, especially an organized event",
+ "example"   : "The centre offers a range of activities, such as cycling, swimming, and tennis."
+},
+{"eng"		 : "fair",
+ "ru" 		 : "честный, справедливый | светлый, белокурый",
+ "eng_value" : "acceptable or right | having pale skin or a light colour of hair",
+ "example"   : "a fair deal | a boy with fair hair and blue eyes"
+},
+{"eng"		 : "upset",
+ "ru" 		 : "расстроенный, огорченный",
+ "eng_value" : "unhappy or worried because something unpleasant has happened",
+ "example"   : "Mike got very upset when I told him the news."
+},
+{"eng"		 : "enjoy",
+ "ru" 		 : "получать удовольствие, наслаждаться",
+ "eng_value" : "it gives you pleasure.",
+ "example"   : "I hope you enjoy your meal."
+},
+{"eng"		 : "extremely",
+ "ru" 		 : "чрезвычайно",
+ "eng_value" : "very, or much more than usual",
+ "example"   : "extremely beautiful"
+},
+{"eng"		 : "decision",
+ "ru" 		 : "решение",
+ "eng_value" : "a choice that you make about something after thinking about several possibilities",
+ "example"   : "She has had to make some very difficult decisions."
+},
+{"eng"		 : "usual",
+ "ru" 		 : "обычный",
+ "eng_value" : "normal and happening most often",
+ "example"   : "I went to bed at my usual time."
+},
+{"eng"		 : "possibility",
+ "ru" 		 : "возможность, вариант | вероятность",
+ "eng_value" : "something that you can choose to do | a chance that something may happen or be true",
+ "example"   : "Have you considered the possibility of flying?"
+},
+{"eng"		 : "purpose",
+ "ru" 		 : "цель",
+ "eng_value" : "why you do something or why something exists",
+ "example"   : "The main purpose of the meeting is to discuss the future of the company."
+},
+{"eng"		 : "pleasant",
+ "ru" 		 : "приятный | милый",
+ "eng_value" : "enjoyable or attractive | a friendly character.",
+ "example"   : "We had a very pleasant evening."
+},
+{"eng"		 : "attractive",
+ "ru" 		 : "привлекательный",
+ "eng_value" : "beautiful or pleasant to look at | interesting or useful",
+ "example"   : "I find him very attractive."
+},
+{"eng"		 : "pleasure",
+ "ru" 		 : "удовольствие, наслаждение",
+ "eng_value" : "a feeling of happiness or enjoyment | an enjoyable activity or experience",
+ "example"   : "Food is one of life's great pleasures."
+},
+{"eng"		 : "several",
+ "ru" 		 : "несколько",
+ "eng_value" : "some, but not a lot",
+ "example"   : "Several people have complained about the scheme."
+},
+{"eng"		 : "meal",
+ "ru" 		 : "принятие пищи, еда",
+ "eng_value" : "the time when you eat, or the food that you eat at that time",
+ "example"   : "That was the worst meal I've ever eaten."
+}
+]
+}
